@@ -2,26 +2,35 @@ import React from 'react'
 import './App.css';
 import axios from 'axios'
 
+
+
+
+
+
+
+
 class App extends React.Component {
     state = {
       gitHub: [],
+      followers: [],
       users: ''
     }
 
     componentDidMount() {
-      axios.get('https://api.github.com/users/Broveku')
-          .then(res=> {
-            this.setState({
-              ...this.state,
-              gitHub:res.data.message
-              
-            })
-            
-          })
-          .catch(err=>{
-            console.log(err)
-          })
-          
+      axios.get(`https://api.github.com/users/${this.state.users}/followers`)
+              .then(res => {
+                this.setState({
+                  ...this.state,
+                  followers:res.data.message
+                })
+              })
+              .catch(err=>{
+                console.log(err)
+              })  
+    }
+
+    componentDidUpdate(){
+        
     }
 
     handleChange = (e) =>{
@@ -39,30 +48,35 @@ class App extends React.Component {
           .then(res =>{
             this.setState({
               ...this.state,
-              gitHub: res.data.message
+              gitHub: res.data
             })
           })
           .catch(err =>{
             console.log(err)
           })
-          
+      
     }
 
 
 
 
     render(){
-      return(<div>
-          <h1>Github Profiles</h1>
+      return(
+      <div>
+        <header>
+          <h1>Github Profile</h1>
           <form>
-            <input onChange={this.handleChange}/>
-            <button onClick={this.handleClick}>search</button>
+              <input placeholder='Please enter a username'  onChange={this.handleChange}/>
+              <button onClick={this.handleClick}>search</button>
           </form>
-          <div id='profile'>
-            
-              <h2>Location{this.state.users.location}</h2>
-
-            
+        </header> 
+          <div className='profile'>
+              <h2>{this.state.gitHub.name}</h2>
+              <h3>{this.state.gitHub.login}</h3>
+              <p>{this.state.gitHub.location}</p>
+              <img src={this.state.gitHub.avatar_url} alt=''/>
+              <p>{this.state.followers.login}</p>
+              
           </div>
       </div>)
     }
