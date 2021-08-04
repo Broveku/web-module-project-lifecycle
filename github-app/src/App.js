@@ -17,16 +17,16 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-      axios.get(`https://api.github.com/users/${this.state.users}/followers`)
-              .then(res => {
-                this.setState({
-                  ...this.state,
-                  followers:res.data.message
-                })
-              })
-              .catch(err=>{
-                console.log(err)
-              })  
+      // axios.get(`https://api.github.com/users/${this.state.users}/followers`)
+      //         .then(res => {
+      //           this.setState({
+      //             ...this.state,
+      //             followers:res.data.message
+      //           })
+      //         })
+      //         .catch(err=>{
+      //           console.log(err)
+      //         })  
     }
 
     componentDidUpdate(){
@@ -64,20 +64,21 @@ class App extends React.Component {
       return(
       <div>
         <header>
-          <h1>Github Profile</h1>
+          <h1>Github Profile Search Engine</h1>
           <form>
               <input placeholder='Please enter a username'  onChange={this.handleChange}/>
               <button onClick={this.handleClick}>search</button>
           </form>
-        </header> 
-          <div className='profile'>
-              <h2>{this.state.gitHub.name}</h2>
-              <h3>{this.state.gitHub.login}</h3>
-              <p>{this.state.gitHub.location}</p>
-              <img src={this.state.gitHub.avatar_url} alt=''/>
-              <p>{this.state.followers.login}</p>
-              
+        </header>
+          <div className='profileDiv'>
+            <div className='profile'>
+                <h2>{this.state.gitHub.name}</h2>
+                <h3>{this.state.gitHub.login}</h3>
+                <p>{this.state.gitHub.location}</p>
+                <img src={this.state.gitHub.avatar_url} alt=''/>
+                <p>{this.state.followers.login}</p>  
           </div>
+        </div> 
       </div>)
     }
 }
